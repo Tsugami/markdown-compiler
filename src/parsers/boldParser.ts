@@ -1,12 +1,15 @@
-import { ParserFunction } from '../types';
+import { Node, Token } from '../types';
 import { peekOr } from '../tokenizer/TokenList';
 
-const match: ParserFunction = (tokens) => {
-  if (peekOr([
+const matchBold = (tokens: Token[]): Node => {
+  if (!tokens.length || !peekOr([
     ['UNDERSCORE', 'UNDERSCORE', 'TEXT', 'UNDERSCORE', 'UNDERSCORE'],
     ['STAR', 'STAR', 'TEXT', 'STAR', 'STAR'],
-  ], tokens)) return null;
-  return { type: 'BOLD', value: tokens[0].value, consumed: 5 };
+  ], tokens)) {
+    return null;
+  }
+
+  return { type: 'BOLD', value: tokens[2].value, consumed: 5 };
 };
 
-export default match;
+export default matchBold;

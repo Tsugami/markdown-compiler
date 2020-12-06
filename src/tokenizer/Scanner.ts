@@ -1,4 +1,5 @@
 import { ScannerFunction, TokenType } from '../types';
+import { takeWhile } from '../Util';
 
 export const TOKEN_TYPES: Record<string, TokenType> = {
   _: 'UNDERSCORE',
@@ -20,10 +21,8 @@ export const SimpleScanner: ScannerFunction = (plainMarkdown) => {
 };
 
 export const TextScanner: ScannerFunction = (plainMarkdown) => {
-  const text = plainMarkdown
-    .split('')
-    .filter((char) => !TOKEN_TYPES[char])
-    .join('');
+  const chars = plainMarkdown.split('');
+  const text = takeWhile(chars, (char) => !!TOKEN_TYPES[char]).join('');
 
   if (!text) {
     return null;

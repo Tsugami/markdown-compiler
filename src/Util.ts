@@ -36,7 +36,6 @@ export function matchFirst<Parser extends ParserFunction>(
   // eslint-disable-next-line no-restricted-syntax
   for (const parser of parsers) {
     const result = parser(tokens) as Node;
-    // console.log('MATCH', result, parser);
     if (result) return result as ReturnType<Parser>;
   }
   return null;
